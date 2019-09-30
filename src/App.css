@@ -1,22 +1,33 @@
-.App {
-  text-align: center;
+.app-wrapper {
+  display: grid;
+  grid-template-rows: 60px 1fr;
+  grid-template-columns: 2fr 10fr;
+  /* grid-gap: 10px; */
+  grid-template-areas: "header header" "nav cont";
+  width: 1200px;
+  margin: 0 auto;
 }
 
-.App-logo {
-  height: 40vmin;
+.header {
+  grid-area: header;
+  background-color: green;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.header img {
+  width: 50px;
 }
 
-.App-link {
-  color: #09d3ac;
+.nav {
+  grid-area: nav;
+  background-color: burlywood;
+}
+.nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.profile {
+  grid-area: cont;
+  background-color: cornflowerblue;
 }
