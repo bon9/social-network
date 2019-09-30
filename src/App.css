@@ -8,26 +8,7 @@
   margin: 0 auto;
 }
 
-.header {
-  grid-area: header;
-  background-color: green;
-}
-
-.header img {
-  width: 50px;
-}
-
-.nav {
-  grid-area: nav;
-  background-color: burlywood;
-}
-.nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.profile {
+.app-wrapper-content {
   grid-area: cont;
   background-color: cornflowerblue;
 }
