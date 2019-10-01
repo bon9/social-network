@@ -1,19 +1,13 @@
 import React from "react";
-import s from "./Profile.module.css";
 
-import MyPosts from "./MyPosts/MyPosts";
+import Posts from "./Posts/Posts";
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
-const Profile = () => {
+const Profile = ({ postData }) => {
   return (
     <div>
-      <div>
-        <img
-          src="https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg"
-          alt="img"
-        />
-      </div>
-      <div>ava+desctr</div>
-      <MyPosts />
+      <ProfileInfo />
+      <Posts postData={postData} />
     </div>
   );
 };
