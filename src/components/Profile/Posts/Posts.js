@@ -2,8 +2,8 @@ import React from "react";
 import classes from "./Posts.module.css";
 import Post from "./Post/Post";
 
-const MyPosts = ({ postData }) => {
-  const posts = postData.map(({ message, like }) => (
+const Posts = ({ posts }) => {
+  const postsRender = posts.map(({ message, like }) => (
     <Post message={message} like={like} />
   ));
 
@@ -13,10 +13,10 @@ const MyPosts = ({ postData }) => {
       <div>
         <textarea name="" id="" cols="10" rows="3"></textarea>
         <button className={classes.btnAdd}>add</button>
-        <div className={classes.posts}>{posts}</div>
+        <div className={classes.posts}>{postsRender}</div>
       </div>
     </div>
   );
 };
 
-export default MyPosts;
+export default Posts;
