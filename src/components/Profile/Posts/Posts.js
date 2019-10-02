@@ -4,7 +4,7 @@ import Post from "./Post/Post";
 import {
   addPostCreator,
   updateNewPostValueCreator
-} from "../../../redux/state";
+} from "../../../redux/profileReducer";
 
 const Posts = ({ posts, dispatch, newPostText }) => {
   const postsRender = posts.map(({ message, like }) => (

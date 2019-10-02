@@ -7,7 +7,7 @@ import Message from "./Message/Message";
 import {
   sendMessageCreator,
   updateNewMessageValueCreator
-} from "../../redux/state";
+} from "../../redux/dialogsReducer";
 
 function Dialogs({
   dialogsPage: { dialogs, messages, newMessageValue },
