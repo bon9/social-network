@@ -3,20 +3,11 @@ import React from "react";
 import Posts from "./Posts/Posts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
-const Profile = ({
-  profilePage: { posts, newPostText },
-  addPost,
-  changeTextareaValue
-}) => {
+const Profile = ({ profilePage: { posts, newPostText }, dispatch }) => {
   return (
     <div>
       <ProfileInfo />
-      <Posts
-        posts={posts}
-        addPost={addPost}
-        changeTextareaValue={changeTextareaValue}
-        newPostText={newPostText}
-      />
+      <Posts posts={posts} dispatch={dispatch} newPostText={newPostText} />
     </div>
   );
 };

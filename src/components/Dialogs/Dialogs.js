@@ -4,7 +4,7 @@ import classes from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
-const Dialogs = ({ state: { dialogs, messages } }) => {
+function Dialogs({ state: { dialogs, messages } }) {
   const dialogsElements = dialogs.map(({ name, id }) => (
     <DialogItem name={name} id={id} />
   ));
@@ -20,6 +20,6 @@ const Dialogs = ({ state: { dialogs, messages } }) => {
       <div className={classes.messages}>{messagesRender}</div>
     </div>
   );
-};
+}
 
 export default Dialogs;

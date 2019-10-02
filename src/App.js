@@ -7,7 +7,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 
-function App({ state, addPost, changeTextareaValue }) {
+function App({ state, dispatch, changeTextareaValue }) {
   return (
     <BrowserRouter>
       <div className="app-wrapper">
@@ -21,11 +21,7 @@ function App({ state, addPost, changeTextareaValue }) {
           <Route
             path="/profile"
             render={() => (
-              <Profile
-                profilePage={state.profilePage}
-                addPost={addPost}
-                changeTextareaValue={changeTextareaValue}
-              />
+              <Profile profilePage={state.profilePage} dispatch={dispatch} />
             )}
           />
         </div>

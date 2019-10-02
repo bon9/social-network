@@ -1,8 +1,12 @@
 import React from "react";
 import classes from "./Posts.module.css";
 import Post from "./Post/Post";
+import {
+  addPostActionCreator,
+  updateNewPostTextActionCreator
+} from "../../../redux/state";
 
-const Posts = ({ posts, addPost, changeTextareaValue, newPostText }) => {
+const Posts = ({ posts, dispatch, newPostText }) => {
   const postsRender = posts.map(({ message, like }) => (
     <Post message={message} like={like} />
   ));
@@ -10,11 +14,12 @@ const Posts = ({ posts, addPost, changeTextareaValue, newPostText }) => {
   const newPostElement = React.createRef();
 
   function onChangeValue(e) {
-    changeTextareaValue(e.target.value);
+    const text = e.target.value;
+    dispatch(updateNewPostTextActionCreator(text));
   }
 
   function handleClickAddBtn() {
-    addPost();
+    dispatch(addPostActionCreator());
   }
 
   return (
