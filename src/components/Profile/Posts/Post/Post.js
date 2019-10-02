@@ -9,7 +9,7 @@ const Post = ({ message, like }) => {
         alt="s"
       />
       {message}
-      <span>like: {like}</span>
+      <span>{` like: ${like}`}</span>
     </div>
   );
 };
