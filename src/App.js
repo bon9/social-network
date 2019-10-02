@@ -16,7 +16,9 @@ function App({ state, dispatch, changeTextareaValue }) {
         <div className="app-wrapper-content">
           <Route
             path="/dialogs"
-            render={() => <Dialogs state={state.dialogsPage} />}
+            render={() => (
+              <Dialogs dialogsPage={state.dialogsPage} dispatch={dispatch} />
+            )}
           />
           <Route
             path="/profile"

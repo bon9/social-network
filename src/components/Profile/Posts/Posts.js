@@ -2,8 +2,8 @@ import React from "react";
 import classes from "./Posts.module.css";
 import Post from "./Post/Post";
 import {
-  addPostActionCreator,
-  updateNewPostTextActionCreator
+  addPostCreator,
+  updateNewPostValueCreator
 } from "../../../redux/state";
 
 const Posts = ({ posts, dispatch, newPostText }) => {
@@ -15,11 +15,11 @@ const Posts = ({ posts, dispatch, newPostText }) => {
 
   function onChangeValue(e) {
     const text = e.target.value;
-    dispatch(updateNewPostTextActionCreator(text));
+    dispatch(updateNewPostValueCreator(text));
   }
 
   function handleClickAddBtn() {
-    dispatch(addPostActionCreator());
+    dispatch(addPostCreator());
   }
 
   return (

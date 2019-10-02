@@ -4,7 +4,15 @@ import classes from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
-function Dialogs({ state: { dialogs, messages } }) {
+import {
+  sendMessageCreator,
+  updateNewMessageValueCreator
+} from "../../redux/state";
+
+function Dialogs({
+  dialogsPage: { dialogs, messages, newMessageValue },
+  dispatch
+}) {
   const dialogsElements = dialogs.map(({ name, id }) => (
     <DialogItem name={name} id={id} />
   ));
@@ -13,11 +21,32 @@ function Dialogs({ state: { dialogs, messages } }) {
     <Message message={message} />
   ));
 
+  function onNewMessageChange(e) {
+    const value = e.target.value;
+    dispatch(updateNewMessageValueCreator(value));
+  }
+
+  function onSendMessageClick() {
+    dispatch(sendMessageCreator());
+  }
+
   return (
     <div className={classes.dialogs}>
       <div className={classes.dialogsItems}>{dialogsElements}</div>
 
-      <div className={classes.messages}>{messagesRender}</div>
+      <div className={classes.messages}>
+        <div>{messagesRender}</div>
+        <div>
+          <textarea
+            cols="10"
+            rows="3"
+            value={newMessageValue}
+            onChange={onNewMessageChange}
+            placeholder="Enter your message"
+          ></textarea>
+          <button onClick={onSendMessageClick}>Send</button>
+        </div>
+      </div>
     </div>
   );
 }
