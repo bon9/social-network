@@ -2,16 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import store from "./redux/state";
+import store from "./redux/store";
 
 function renderEntireTree(state) {
-  ReactDOM.render(
-    <App state={state} dispatch={store.dispatch.bind(store)} />,
-    document.getElementById("root")
-  );
+  ReactDOM.render(<App store={store} />, document.getElementById("root"));
 }
 
 // для первого рендера
 renderEntireTree(store.getState());
 
-store.subscribe(renderEntireTree);
+store.subscribe(() => renderEntireTree(store.getState()));

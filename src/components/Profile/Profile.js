@@ -1,13 +1,13 @@
 import React from "react";
 
-import Posts from "./Posts/Posts";
+import PostsContainer from "./Posts/PostsContainer";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
-const Profile = ({ profilePage: { posts, newPostText }, dispatch }) => {
+const Profile = ({ store }) => {
   return (
     <div>
       <ProfileInfo />
-      <Posts posts={posts} dispatch={dispatch} newPostText={newPostText} />
+      <PostsContainer store={store} />
     </div>
   );
 };

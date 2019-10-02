@@ -5,9 +5,9 @@ import "./App.css";
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
-import Dialogs from "./components/Dialogs/Dialogs";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
-function App({ state, dispatch, changeTextareaValue }) {
+function App({ store }) {
   return (
     <BrowserRouter>
       <div className="app-wrapper">
@@ -16,16 +16,9 @@ function App({ state, dispatch, changeTextareaValue }) {
         <div className="app-wrapper-content">
           <Route
             path="/dialogs"
-            render={() => (
-              <Dialogs dialogsPage={state.dialogsPage} dispatch={dispatch} />
-            )}
+            render={() => <DialogsContainer store={store} />}
           />
-          <Route
-            path="/profile"
-            render={() => (
-              <Profile profilePage={state.profilePage} dispatch={dispatch} />
-            )}
-          />
+          <Route path="/profile" render={() => <Profile store={store} />} />
         </div>
       </div>
     </BrowserRouter>

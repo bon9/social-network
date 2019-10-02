@@ -1,7 +1,16 @@
 const APP_POST = "ADD_POST";
 const UPDATE_NEW_POST_VALUE = "UPDATE_NEW_POST_VALUE";
 
-const profileReducer = (state, action) => {
+const initialState = {
+  posts: [
+    { id: 1, message: "hello", like: "5" },
+    { id: 1, message: "it is my second post", like: "3" },
+    { id: 1, message: "yes", like: "5" }
+  ],
+  newPostValue: ""
+};
+
+const profileReducer = (state = initialState, action) => {
   switch (action.type) {
     case APP_POST:
       const newPost = {
