@@ -1,5 +1,3 @@
-import { renderEntireTree } from "../render";
-
 const state = {
   profilePage: {
     posts: [
@@ -25,6 +23,9 @@ const state = {
     ]
   }
 };
+window.state = state;
+
+let renderEntireTree;
 
 export function addPost() {
   const newPost = {
@@ -41,4 +42,11 @@ export function changeTextareaValue(value) {
   state.profilePage.newPostText = value;
   renderEntireTree(state);
 }
+
+// вызвали в индексе, передали renderEntireTree из индекса в аргумент
+// и присвоили местной renderEntireTree
+export function subscribe(observer) {
+  renderEntireTree = observer;
+}
+
 export default state;
