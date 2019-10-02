@@ -1,25 +1,19 @@
 import React from "react";
 import classes from "./Posts.module.css";
 import Post from "./Post/Post";
-import {
-  addPostCreator,
-  updateNewPostValueCreator
-} from "../../../redux/profileReducer";
 
-const Posts = ({ posts, dispatch, newPostText }) => {
+const Posts = ({ posts, newPostText, addPost, updateNewPostValue }) => {
   const postsRender = posts.map(({ message, like }) => (
     <Post message={message} like={like} />
   ));
 
-  const newPostElement = React.createRef();
-
   function onChangeValue(e) {
     const text = e.target.value;
-    dispatch(updateNewPostValueCreator(text));
+    updateNewPostValue(text);
   }
 
   function handleClickAddBtn() {
-    dispatch(addPostCreator());
+    addPost();
   }
 
   return (
@@ -28,7 +22,6 @@ const Posts = ({ posts, dispatch, newPostText }) => {
       <div>
         <textarea
           value={newPostText}
-          ref={newPostElement}
           cols="10"
           rows="3"
           onChange={onChangeValue}
