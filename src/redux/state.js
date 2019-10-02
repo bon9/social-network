@@ -6,7 +6,8 @@ const state = {
       { id: 1, message: "hello", like: "5" },
       { id: 1, message: "it is my second post", like: "3" },
       { id: 1, message: "yes", like: "5" }
-    ]
+    ],
+    newPostText: ""
   },
 
   dialogsPage: {
@@ -25,14 +26,19 @@ const state = {
   }
 };
 
-export function addPost(postMessage) {
+export function addPost() {
   const newPost = {
     id: 5,
-    message: postMessage,
+    message: state.profilePage.newPostText,
     like: 5
   };
   state.profilePage.posts.push(newPost);
+  state.profilePage.newPostText = "";
   renderEntireTree(state);
 }
 
+export function changeTextareaValue(value) {
+  state.profilePage.newPostText = value;
+  renderEntireTree(state);
+}
 export default state;
