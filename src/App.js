@@ -8,21 +8,21 @@ import Profile from "./components/Profile/Profile";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 function App({ store }) {
-  return (
-    <BrowserRouter>
-      <div className="app-wrapper">
-        <Header />
-        <Navbar />
-        <div className="app-wrapper-content">
-          <Route
-            path="/dialogs"
-            render={() => <DialogsContainer store={store} />}
-          />
-          <Route path="/profile" render={() => <Profile store={store} />} />
-        </div>
-      </div>
-    </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <div className="app-wrapper">
+                <Header />
+                <Navbar />
+                <div className="app-wrapper-content">
+                    <Route
+                        path="/dialogs"
+                        render={() => <DialogsContainer />}
+                    />
+                    <Route path="/profile" render={() => <Profile />} />
+                </div>
+            </div>
+        </BrowserRouter>
+    );
 }
 
 export default App;
