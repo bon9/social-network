@@ -4,18 +4,12 @@ import classes from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
-function Dialogs({
-    onNewMessageChange,
-    sendMessageCreator,
-    dialogs,
-    messages,
-    newMessageValue
-}) {
-    const dialogsElements = dialogs.map(({ name, id }) => (
+function Dialogs({ onNewMessageChange, sendMessageCreator, dialogsPage }) {
+    const dialogsElements = dialogsPage.dialogs.map(({ name, id }) => (
         <DialogItem name={name} id={id} />
     ));
 
-    const messagesRender = messages.map(({ message }) => (
+    const messagesRender = dialogsPage.messages.map(({ message }) => (
         <Message message={message} />
     ));
 
@@ -38,7 +32,7 @@ function Dialogs({
                     <textarea
                         cols="10"
                         rows="3"
-                        value={newMessageValue}
+                        value={dialogsPage.newMessageValue}
                         onChange={onChangeHandler}
                         placeholder="Enter your message"
                     ></textarea>
