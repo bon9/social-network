@@ -6,11 +6,11 @@ import Message from "./Message/Message";
 
 function Dialogs({ onNewMessageChange, sendMessageCreator, dialogsPage }) {
     const dialogsElements = dialogsPage.dialogs.map(({ name, id }) => (
-        <DialogItem name={name} id={id} />
+        <DialogItem name={name} id={id} key={id} />
     ));
 
-    const messagesRender = dialogsPage.messages.map(({ message }) => (
-        <Message message={message} />
+    const messagesRender = dialogsPage.messages.map(({ message, id }) => (
+        <Message message={message} key={id} />
     ));
 
     function onChangeHandler(e) {

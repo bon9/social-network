@@ -5,11 +5,11 @@ import dialogsReducer from "./dialogsReducer";
 import sidebarReducer from "./sidebarReducer";
 
 const rootReducers = combineReducers({
-  profilePage: profileReducer,
-  dialogsPage: dialogsReducer,
-  sidebarPage: sidebarReducer
+    profilePage: profileReducer,
+    dialogsPage: dialogsReducer,
+    sidebarPage: sidebarReducer
 });
 
 const store = createStore(rootReducers);
-
+window.store = store;
 export default store;
