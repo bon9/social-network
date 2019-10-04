@@ -4,23 +4,23 @@ import Users from "./Users";
 import { toggleFollowAC, setUserAC } from "../../redux/usersReducer";
 
 const mapStateToProps = state => {
-    return {
-        users: state.usersPage.users
-    };
+  return {
+    users: state.usersPage.users
+  };
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-        onToogleFollow: userId => {
-            dispatch(toggleFollowAC(userId));
-        },
-        onSetUsers: users => {
-            dispatch(setUserAC(users));
-        }
-    };
+  return {
+    onToogleFollow: userId => {
+      dispatch(toggleFollowAC(userId));
+    },
+    onSetUsers: users => {
+      dispatch(setUserAC(users));
+    }
+  };
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Users);
