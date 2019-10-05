@@ -9,27 +9,27 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 
 function App() {
-    return (
-        <BrowserRouter>
-            <div className="app-wrapper">
-                <Header />
-                <Navbar />
-                <div className="app-wrapper-content">
-                    <Route
-                        path="/dialogs"
-                        component={DialogsContainer}
-                        // render={() => <DialogsContainer />}
-                    />
-                    <Route
-                        path="/profile"
-                        component={ProfileContainer}
-                        // render={() => <Profile />}
-                    />
-                    <Route path="/users" component={UsersContainer} />
-                </div>
+   return (
+      <BrowserRouter>
+         <div className="app-wrapper">
+            <Header />
+            <Navbar />
+            <div className="app-wrapper-content">
+               <Route
+                  path="/dialogs"
+                  component={DialogsContainer}
+                  // render={() => <DialogsContainer />}
+               />
+               <Route
+                  path="/profile/:userId?"
+                  component={ProfileContainer}
+                  // render={() => <Profile />}
+               />
+               <Route path="/users" component={UsersContainer} />
             </div>
-        </BrowserRouter>
-    );
+         </div>
+      </BrowserRouter>
+   );
 }
 
 export default App;
