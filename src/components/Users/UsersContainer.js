@@ -3,21 +3,25 @@ import axios from "axios";
 import { connect } from "react-redux";
 
 import Users from "./Users";
+import Preloader from "./../common/Preloader/Preloader";
 
 import {
     toggleFollowAC,
     setUserAC,
     setCurrentPageAC,
-    setTotalCountAC
+    setTotalCountAC,
+    setIsFetching
 } from "../../redux/usersReducer";
 
 class UsersContainer extends React.Component {
     componentDidMount() {
+        this.props.onSetIsFetching(true);
         axios
             .get(
                 `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
             )
             .then(res => {
+                this.props.onSetIsFetching(false);
                 this.props.onSetUsers(res.data.items);
                 this.props.onSetTotalUsersCount(res.data.totalCount);
             });
@@ -25,11 +29,13 @@ class UsersContainer extends React.Component {
 
     onPageChanged = pageNum => {
         this.props.onSetCurrentPage(pageNum);
+        this.props.onSetIsFetching(true);
         axios
             .get(
                 `https://social-network.samuraijs.com/api/1.0/users?page=${pageNum}&count=${this.props.pageSize}`
             )
             .then(res => {
+                this.props.onSetIsFetching(false);
                 this.props.onSetUsers(res.data.items);
             });
     };
@@ -40,18 +46,25 @@ class UsersContainer extends React.Component {
             onToogleFollow,
             pageSize,
             currentPage,
-            totalUsersCount
+            totalUsersCount,
+            isFetching
         } = this.props;
 
         return (
-            <Users
-                users={users}
-                onToogleFollow={onToogleFollow}
-                pageSize={pageSize}
-                currentPage={currentPage}
-                totalUsersCount={totalUsersCount}
-                onPageChanged={this.onPageChanged}
-            />
+            <>
+                {isFetching ? (
+                    <Preloader />
+                ) : (
+                    <Users
+                        users={users}
+                        onToogleFollow={onToogleFollow}
+                        pageSize={pageSize}
+                        currentPage={currentPage}
+                        totalUsersCount={totalUsersCount}
+                        onPageChanged={this.onPageChanged}
+                    />
+                )}
+            </>
         );
     }
 }
@@ -61,7 +74,8 @@ const mapStateToProps = state => {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage
+        currentPage: state.usersPage.currentPage,
+        isFetching: state.usersPage.isFetching
     };
 };
 
@@ -78,6 +92,9 @@ const mapDispatchToProps = dispatch => {
         },
         onSetTotalUsersCount: totalCount => {
             dispatch(setTotalCountAC(totalCount));
+        },
+        onSetIsFetching: isFetching => {
+            dispatch(setIsFetching(isFetching));
         }
     };
 };
