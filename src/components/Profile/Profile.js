@@ -3,12 +3,12 @@ import React from "react";
 import PostsContainer from "./Posts/PostsContainer";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
-const Profile = ({ store }) => {
+const Profile = ({ userProfile }) => {
     return (
-        <div>
-            <ProfileInfo />
+        <>
+            <ProfileInfo userProfile={userProfile} />
             <PostsContainer />
-        </div>
+        </>
     );
 };
 
