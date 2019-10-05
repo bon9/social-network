@@ -1,3 +1,10 @@
 .userPhoto {
     width: 100px;
 }
+
+.selectedPage {
+    font-weight: bold;
+}
+.numberPage:hover {
+    cursor: pointer;
+}
