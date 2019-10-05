@@ -7,7 +7,7 @@ function Users({
     pageSize,
     currentPage,
     totalUsersCount,
-    onToogleFollow,
+    toggleFollow,
     onPageChanged
 }) {
     const pagesCount = Math.ceil(totalUsersCount / pageSize); // 5
@@ -42,11 +42,11 @@ function Users({
                         </div>
                         <div>
                             {u.followed ? (
-                                <button onClick={() => onToogleFollow(u.id)}>
+                                <button onClick={() => toggleFollow(u.id)}>
                                     Follow
                                 </button>
                             ) : (
-                                <button onClick={() => onToogleFollow(u.id)}>
+                                <button onClick={() => toggleFollow(u.id)}>
                                     Unfollow
                                 </button>
                             )}

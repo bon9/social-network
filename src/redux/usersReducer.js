@@ -42,19 +42,19 @@ const usersReducer = (state = initialState, action) => {
     }
 };
 
-export function toggleFollowAC(userId) {
+export function toggleFollow(userId) {
     return { type: TOGGLE_FOLLOW, userId };
 }
 
-export function setUserAC(users) {
+export function setUsers(users) {
     return { type: SET_USERS, users };
 }
 
-export function setCurrentPageAC(currentPage) {
+export function setCurrentPage(currentPage) {
     return { type: SET_CURRENT_PAGE, currentPage };
 }
 
-export function setTotalCountAC(totalCount) {
+export function setTotalCount(totalCount) {
     return { type: SET_TOTAL_COUNT_PAGE, totalCount };
 }
 
