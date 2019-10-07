@@ -1,10 +1,14 @@
 .userPhoto {
-    width: 100px;
+  width: 100px;
 }
 
 .selectedPage {
-    font-weight: bold;
+  font-weight: bold;
 }
 .numberPage:hover {
-    cursor: pointer;
+  cursor: pointer;
+}
+
+.user {
+  margin-bottom: 15px;
 }

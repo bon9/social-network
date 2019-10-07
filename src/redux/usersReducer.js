@@ -1,3 +1,5 @@
+import { usersAPI } from "./../api/api";
+
 const FOLLOW = "FOLLOW";
 const UN_FOLLOW = "UN_FOLLOW";
 const SET_USERS = "SET_USERS";
@@ -12,7 +14,7 @@ const initialState = {
   totalUsersCount: 0,
   currentPage: 1,
   isFetching: false,
-  followingProgress: []
+  usersInFollowingChanging: []
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -54,15 +56,15 @@ const usersReducer = (state = initialState, action) => {
     case TOGGLE_FOLLOWING_PROGRESS:
       return {
         ...state,
-        followingProgress: action.isFetching
+        usersInFollowingChanging: action.isFetching
           ? // диспатчим экшн перед запросом c isFetching = true
             // и после ответа  c isFetching = false.
             // Если запрос в процессе, то добавляем айди в массив юзеров, которые в
             // данный момент в процессе (в компоненте проверяем, если айди юзера в
             // массиве есть, то дизейблим кнопку)
-            [...state.followingProgress, action.userId]
+            [...state.usersInFollowingChanging, action.userId]
           : // Если запрос уже НЕ в процессе, то удаляем айдишник из массива
-            state.followingProgress.filter(id => id !== action.userId)
+            state.usersInFollowingChanging.filter(id => id !== action.userId)
       };
     default:
       return state;
@@ -96,5 +98,29 @@ export function setIsFetching(isFetching) {
 export function toggleFollowingProgress(isFetching, userId) {
   return { type: TOGGLE_FOLLOWING_PROGRESS, isFetching, userId };
 }
+
+export const getUsersThunk = (currentPage, pageSize) => {
+  return dispatch => {
+    dispatch(setCurrentPage(currentPage));
+    dispatch(setIsFetching(true));
+    usersAPI.getUsers(currentPage, pageSize).then(data => {
+      dispatch(setIsFetching(false));
+      dispatch(setUsers(data.items));
+      dispatch(setTotalCount(data.totalCount));
+    });
+  };
+};
+
+export const toggleFollowingThunk = (followed, userId) => {
+  return dispatch => {
+    dispatch(toggleFollowingProgress(true, userId));
+    usersAPI.changeFollow(followed, userId).then(data => {
+      if (data.resultCode === 0) {
+        followed ? dispatch(unFollow(userId)) : dispatch(follow(userId));
+      }
+      dispatch(toggleFollowingProgress(false, userId));
+    });
+  };
+};
 
 export default usersReducer;

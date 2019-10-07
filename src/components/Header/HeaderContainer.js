@@ -1,24 +1,13 @@
 import React from "react";
 import Header from "./Header";
-import axios from "axios";
 import { connect } from "react-redux";
-import { setAuthUserData } from "./../../redux/authReducer";
+import { getAuthUserDataThunk } from "./../../redux/authReducer";
 
 class HeaderContainer extends React.Component {
   componentDidMount() {
-    axios
-      .get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
-        // withCredentials - хотим ли мы отправить с файлом cookie на сервер, в которой будет указанна инфа авторизованы мы в этом браузере или нет
-        withCredentials: true
-      })
-      .then(res => {
-        // resultCode 0 - мы залогинены
-        if (res.data.resultCode === 0) {
-          const { id, email, login } = res.data.data;
-          this.props.setAuthUserData(id, email, login);
-        }
-      });
+    this.props.getAuthUserData();
   }
+
   render() {
     return <Header {...this.props} />;
   }
@@ -33,6 +22,6 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    setAuthUserData
+    getAuthUserData: getAuthUserDataThunk
   }
 )(HeaderContainer);

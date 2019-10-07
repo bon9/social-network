@@ -20,3 +20,15 @@ export const usersAPI = {
       : instance.post(`follow/${id}`).then(res => res.data);
   }
 };
+
+export const authAPI = {
+  authMe() {
+    return instance.get(`auth/me`).then(res => res.data);
+  }
+};
+
+export const profileAPI = {
+  getProfile(userId) {
+    return instance.get(`profile/${userId || 1509}`);
+  }
+};
