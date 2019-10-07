@@ -4,13 +4,15 @@ const SET_USERS = "SET_USERS";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_TOTAL_COUNT_PAGE = "SET_TOTAL_COUNT_PAGE";
 const SET_IS_FETCHING = "SET_IS_FETCHING";
+const TOGGLE_FOLLOWING_PROGRESS = "TOGGLE_FOLLOWING_PROGRESS";
 
 const initialState = {
   users: [],
   pageSize: 5,
   totalUsersCount: 0,
   currentPage: 1,
-  isFetching: false
+  isFetching: false,
+  followingProgress: []
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -49,6 +51,19 @@ const usersReducer = (state = initialState, action) => {
     case SET_IS_FETCHING:
       return { ...state, isFetching: action.isFetching };
 
+    case TOGGLE_FOLLOWING_PROGRESS:
+      return {
+        ...state,
+        followingProgress: action.isFetching
+          ? // диспатчим экшн перед запросом c isFetching = true
+            // и после ответа  c isFetching = false.
+            // Если запрос в процессе, то добавляем айди в массив юзеров, которые в
+            // данный момент в процессе (в компоненте проверяем, если айди юзера в
+            // массиве есть, то дизейблим кнопку)
+            [...state.followingProgress, action.userId]
+          : // Если запрос уже НЕ в процессе, то удаляем айдишник из массива
+            state.followingProgress.filter(id => id !== action.userId)
+      };
     default:
       return state;
   }
@@ -76,6 +91,10 @@ export function setTotalCount(totalCount) {
 
 export function setIsFetching(isFetching) {
   return { type: SET_IS_FETCHING, isFetching };
+}
+
+export function toggleFollowingProgress(isFetching, userId) {
+  return { type: TOGGLE_FOLLOWING_PROGRESS, isFetching, userId };
 }
 
 export default usersReducer;
