@@ -16,16 +16,8 @@ function App() {
         <HeaderContainer />
         <Navbar />
         <div className="app-wrapper-content">
-          <Route
-            path="/dialogs"
-            component={DialogsContainer}
-            // render={() => <DialogsContainer />}
-          />
-          <Route
-            path="/profile/:userId?"
-            component={ProfileContainer}
-            // render={() => <Profile />}
-          />
+          <Route path="/dialogs" component={DialogsContainer} />
+          <Route path="/profile/:userId?" component={ProfileContainer} />
           <Route path="/users" component={UsersContainer} />
           <Route path="/login" component={Login} />
         </div>
