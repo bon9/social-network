@@ -4,12 +4,12 @@ import PostsContainer from "./Posts/PostsContainer";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
 const Profile = ({ userProfile }) => {
-    return (
-        <>
-            <ProfileInfo userProfile={userProfile} />
-            <PostsContainer />
-        </>
-    );
+  return (
+    <>
+      <ProfileInfo userProfile={userProfile} />
+      <PostsContainer />
+    </>
+  );
 };
 
 export default Profile;
