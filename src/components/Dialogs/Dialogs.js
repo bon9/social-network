@@ -4,7 +4,40 @@ import classes from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
-function Dialogs({ onNewMessageChange, sendMessageCreator, dialogsPage }) {
+import { Form, Field } from "react-final-form";
+
+const MessageForm = ({ onSubmit }) => {
+  return (
+    <Form
+      onSubmit={onSubmit}
+      render={({ handleSubmit, values, form, submitting, pristine }) => {
+        return (
+          <form
+            onSubmit={e => {
+              handleSubmit(e);
+              form.reset();
+            }}
+          >
+            <div>
+              <Field
+                name="messageText"
+                component="textarea"
+                placeholder="add text your message"
+              />
+            </div>
+            <div>
+              <button type="submit" disabled={submitting || pristine}>
+                ADD
+              </button>
+            </div>
+          </form>
+        );
+      }}
+    />
+  );
+};
+
+function Dialogs({ sendMessageCreator, dialogsPage }) {
   const dialogsElements = dialogsPage.dialogs.map(({ name, id }) => (
     <DialogItem name={name} id={id} key={id} />
   ));
@@ -13,14 +46,9 @@ function Dialogs({ onNewMessageChange, sendMessageCreator, dialogsPage }) {
     <Message message={message} key={id} />
   ));
 
-  function onChangeHandler(e) {
-    const value = e.target.value;
-    onNewMessageChange(value);
-  }
-
-  function onClickHandler() {
-    sendMessageCreator();
-  }
+  const onSubmit = values => {
+    sendMessageCreator(values.messageText);
+  };
 
   return (
     <div className={classes.dialogs}>
@@ -28,16 +56,7 @@ function Dialogs({ onNewMessageChange, sendMessageCreator, dialogsPage }) {
 
       <div className={classes.messages}>
         <div>{messagesRender}</div>
-        <div>
-          <textarea
-            cols="10"
-            rows="3"
-            value={dialogsPage.newMessageValue}
-            onChange={onChangeHandler}
-            placeholder="Enter your message"
-          ></textarea>
-          <button onClick={onClickHandler}>Send</button>
-        </div>
+        <MessageForm onSubmit={onSubmit} />
       </div>
     </div>
   );

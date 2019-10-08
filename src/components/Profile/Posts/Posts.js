@@ -2,37 +2,55 @@ import React from "react";
 import classes from "./Posts.module.css";
 import Post from "./Post/Post";
 
-const Posts = ({ posts, newPostText, addPost, updateNewPostValue }) => {
-    const postsRender = posts.map(({ message, like, id }) => (
-        <Post message={message} like={like} key={id} />
-    ));
+import { Form, Field } from "react-final-form";
 
-    function onChangeValue(e) {
-        const text = e.target.value;
-        updateNewPostValue(text);
-    }
-
-    function handleClickAddBtn() {
-        addPost();
-    }
-
-    return (
-        <div className={classes.postsBlock}>
-            <h2>My posts</h2>
+const PostForm = ({ onSubmit }) => {
+  return (
+    <Form
+      onSubmit={onSubmit}
+      render={({ handleSubmit, values, form, submitting, pristine }) => {
+        return (
+          <form
+            onSubmit={e => {
+              handleSubmit(e);
+              form.reset();
+            }}
+          >
             <div>
-                <textarea
-                    value={newPostText}
-                    cols="10"
-                    rows="3"
-                    onChange={onChangeValue}
-                ></textarea>
-                <button className={classes.btnAdd} onClick={handleClickAddBtn}>
-                    add
-                </button>
-                <div className={classes.posts}>{postsRender}</div>
+              <Field
+                name="postText"
+                component="textarea"
+                placeholder="add text your post"
+              />
             </div>
-        </div>
-    );
+            <div>
+              <button type="submit" disabled={submitting || pristine}>
+                ADD
+              </button>
+            </div>
+          </form>
+        );
+      }}
+    />
+  );
+};
+
+const Posts = ({ posts, addPostCreator }) => {
+  const postsRender = posts.map(({ message, like, id }) => (
+    <Post message={message} like={like} key={id} />
+  ));
+
+  const onSubmit = values => {
+    addPostCreator(values.postText);
+  };
+
+  return (
+    <div className={classes.postsBlock}>
+      <h2>My posts</h2>
+      <PostForm onSubmit={onSubmit} />
+      <div className={classes.posts}>{postsRender}</div>
+    </div>
+  );
 };
 
 export default Posts;
