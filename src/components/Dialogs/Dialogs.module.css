@@ -21,3 +21,7 @@
 .messages .message {
   color: white;
 }
+
+.required {
+  box-shadow: inset 0 0 2px 2px red;
+}
