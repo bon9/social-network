@@ -1,13 +1,21 @@
 import React from "react";
 import classes from "./Login.module.css";
 import { Form, Field } from "react-final-form";
+import { connect } from "react-redux";
 import { minLength } from "./../../utils/validators";
 import LoginInput from "./LoginInput";
+import { loginThunk, logoutThunk } from "./../../redux/authReducer";
+import { Redirect } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ loginThunk, isAuth }) => {
   const onSubmit = values => {
-    console.log(values);
+    const { login, password, rememberMe } = values;
+    loginThunk(login, password, rememberMe);
   };
+
+  if (isAuth) {
+    return <Redirect to="/profile" />;
+  }
 
   return (
     <div>
@@ -16,7 +24,7 @@ const Login = () => {
     </div>
   );
 };
-
+// PbRw9jAcfS9adsa
 const LoginForm = ({ onSubmit }) => {
   return (
     <Form
@@ -26,14 +34,14 @@ const LoginForm = ({ onSubmit }) => {
         return (
           <form onSubmit={handleSubmit} className={classes.loginForm}>
             <div>
-              <Field name="login" validate={minLength(5)}>
+              <Field name="login" validate={minLength(1)}>
                 {({ input, meta }) => (
                   <LoginInput input={input} meta={meta} placeholder="Login" />
                 )}
               </Field>
             </div>
             <div>
-              <Field name="password" validate={minLength(10)}>
+              <Field name="password" validate={minLength(1)}>
                 {({ input, meta }) => (
                   <LoginInput
                     input={input}
@@ -63,4 +71,13 @@ const LoginForm = ({ onSubmit }) => {
   );
 };
 
-export default Login;
+const mstp = state => {
+  return {
+    isAuth: state.auth.isAuth
+  };
+};
+
+export default connect(
+  mstp,
+  { loginThunk, logoutThunk }
+)(Login);

@@ -16,8 +16,7 @@ const authReducer = (state = initialState, action) => {
       //action.data объект с userId, email, login
       return {
         ...state,
-        ...action.data,
-        isAuth: true
+        ...action.payload
       };
 
     default:
@@ -25,8 +24,15 @@ const authReducer = (state = initialState, action) => {
   }
 };
 
-export function setAuthUserData(userId, email, login) {
-  return { type: SET_AUTH_USER_DATA, data: { userId, email, login } };
+export function setAuthUserData(userId, email, login, isAuth) {
+  return {
+    type: SET_AUTH_USER_DATA,
+    payload: { userId, email, login, isAuth }
+  };
+}
+
+export function setLogout() {
+  return { type: SET_AUTH_USER_DATA };
 }
 
 export const getAuthUserDataThunk = () => {
@@ -35,7 +41,29 @@ export const getAuthUserDataThunk = () => {
       // resultCode 0 - мы залогинены
       if (data.resultCode === 0) {
         const { id, email, login } = data.data;
-        dispatch(setAuthUserData(id, email, login));
+        dispatch(setAuthUserData(id, email, login, true));
+      }
+    });
+  };
+};
+
+export const loginThunk = (email, password, rememberMe) => {
+  return dispatch => {
+    authAPI.login(email, password, rememberMe).then(data => {
+      // resultCode 0 - мы залогинены
+      if (data.resultCode === 0) {
+        dispatch(getAuthUserDataThunk());
+      }
+    });
+  };
+};
+
+export const logoutThunk = () => {
+  return dispatch => {
+    authAPI.logout().then(data => {
+      // resultCode 0 - мы залогинены
+      if (data.resultCode === 0) {
+        dispatch(setAuthUserData(null, null, null, false));
       }
     });
   };
