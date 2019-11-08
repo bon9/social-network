@@ -1,12 +1,12 @@
 import React from "react";
 import classes from "./Login.module.css";
 
-const LoginInput = ({ input, meta, placeholder }) => {
+const LoginInput = ({ input, meta, placeholder, type }) => {
   return (
-    <div>
+    <div style={{ display: type === "checkbox" ? "inline-block" : "block" }}>
       <input
         {...input}
-        type="text"
+        type={type}
         placeholder={placeholder}
         className={meta.error && meta.touched ? classes.required : undefined}
       />

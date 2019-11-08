@@ -33,28 +33,32 @@ const LoginForm = ({ onSubmit, error }) => {
       render={({ handleSubmit, form, values, submitting, pristine }) => {
         return (
           <form onSubmit={handleSubmit} className={classes.loginForm}>
-            <div>
-              <Field name="login" validate={minLength(1)}>
-                {({ input, meta }) => (
-                  <LoginInput input={input} meta={meta} placeholder="Login" />
-                )}
-              </Field>
-            </div>
-            <div>
-              <Field name="password" validate={minLength(1)}>
-                {({ input, meta }) => (
-                  <LoginInput
-                    input={input}
-                    meta={meta}
-                    placeholder="Password"
-                  />
-                )}
-              </Field>
-            </div>
-            <div>
-              <Field type="checkbox" name="rememberMe" component={"input"} />
-              Remember me
-            </div>
+            <Field name="login" validate={minLength(1)}>
+              {({ input, meta }) => (
+                <LoginInput
+                  input={input}
+                  meta={meta}
+                  placeholder="Login"
+                  type="text"
+                />
+              )}
+            </Field>
+            <Field name="password" validate={minLength(1)}>
+              {({ input, meta }) => (
+                <LoginInput
+                  input={input}
+                  meta={meta}
+                  placeholder="Password"
+                  type="text"
+                />
+              )}
+            </Field>
+            <Field name="rememberMe">
+              {({ input, meta }) => (
+                <LoginInput input={input} meta={meta} type="checkbox" />
+              )}
+            </Field>
+            <label for="rememberMe">remember me</label>
             {error && <div>{error}</div>}
 
             <div>

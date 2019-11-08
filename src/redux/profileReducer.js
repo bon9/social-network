@@ -1,9 +1,9 @@
 import { profileAPI } from "./../api/api";
 
-const APP_POST = "ADD_POST";
-const SET_USER_PROFILE = "SET_USER_PROFILE";
-const SET_STATUS = "SET_STATUS";
-const DELETE_POST = "DELETE_POST";
+const ADD_POST = "profile/ADD_POST";
+const SET_USER_PROFILE = "profile/SET_USER_PROFILE";
+const SET_STATUS = "profile/SET_STATUS";
+const DELETE_POST = "profile/DELETE_POST";
 
 const initialState = {
   posts: [
@@ -17,7 +17,7 @@ const initialState = {
 
 const profileReducer = (state = initialState, action) => {
   switch (action.type) {
-    case APP_POST:
+    case ADD_POST:
       const newPost = {
         id: 5,
         message: action.post,
@@ -49,7 +49,7 @@ const profileReducer = (state = initialState, action) => {
 };
 
 export function addPostCreator(post) {
-  return { type: APP_POST, post };
+  return { type: ADD_POST, post };
 }
 
 export function deletePost(postId) {
@@ -64,30 +64,21 @@ export function setStatus(status) {
   return { type: SET_STATUS, status };
 }
 
-export const getUserProfileThunk = userId => {
-  return dispatch => {
-    profileAPI.getProfile(userId).then(res => {
-      dispatch(setUserProfile(res.data));
-    });
-  };
+export const getUserProfileThunk = userId => async dispatch => {
+  const response = await profileAPI.getProfile(userId);
+  dispatch(setUserProfile(response.data));
 };
 
-export const getUserStatusThunk = userId => {
-  return dispatch => {
-    profileAPI.getStatus(userId).then(res => {
-      dispatch(setStatus(res.data));
-    });
-  };
+export const getUserStatusThunk = userId => async dispatch => {
+  const response = await profileAPI.getStatus(userId);
+  dispatch(setStatus(response.data));
 };
 
-export const updateStatusThunk = status => {
-  return dispatch => {
-    profileAPI.updateStatus(status).then(res => {
-      if (res.data.resultCode === 0) {
-        dispatch(setStatus(status));
-      }
-    });
-  };
+export const updateStatusThunk = status => async dispatch => {
+  const response = await profileAPI.updateStatus(status);
+  if (response.data.resultCode === 0) {
+    dispatch(setStatus(status));
+  }
 };
 
 export default profileReducer;

@@ -2,13 +2,6 @@
   width: 100px;
 }
 
-.selectedPage {
-  font-weight: bold;
-}
-.numberPage:hover {
-  cursor: pointer;
-}
-
 .user {
   margin-bottom: 15px;
 }

@@ -9,29 +9,39 @@ const instance = axios.create({
 });
 
 export const usersAPI = {
-  getUsers(currentPage = 1, pageSize = 10) {
-    return instance
-      .get(`users?page=${currentPage}&count=${pageSize}`)
-      .then(res => res.data);
+  async getUsers(currentPage = 1, pageSize = 10) {
+    const res = await instance.get(
+      `users?page=${currentPage}&count=${pageSize}`
+    );
+    return res.data;
   },
-  changeFollow(followed, id) {
-    return followed
-      ? instance.delete(`follow/${id}`).then(res => res.data)
-      : instance.post(`follow/${id}`).then(res => res.data);
+  async changeFollow(followed, id) {
+    let response;
+    if (followed) {
+      response = await instance.delete(`follow/${id}`);
+    } else {
+      response = await instance.post(`follow/${id}`);
+    }
+    return response.data;
   }
 };
 
 export const authAPI = {
-  authMe() {
-    return instance.get(`auth/me`).then(res => res.data);
+  async authMe() {
+    const res = await instance.get(`auth/me`);
+    return res.data;
   },
-  login(email, password, rememberMe = false) {
-    return instance
-      .post(`auth/login`, { email, password, rememberMe })
-      .then(res => res.data);
+  async login(email, password, rememberMe = false) {
+    const res = await instance.post(`auth/login`, {
+      email,
+      password,
+      rememberMe
+    });
+    return res.data;
   },
-  logout() {
-    return instance.delete(`auth/login`).then(res => res.data);
+  async logout() {
+    const res = await instance.delete(`auth/login`);
+    return res.data;
   }
 };
 
