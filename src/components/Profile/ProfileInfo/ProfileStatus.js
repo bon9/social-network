@@ -1,57 +1,44 @@
-import React from "react";
-// import classes from "./ProfileInfo.module.css";
+import React, { useState, useEffect } from "react";
 
-class ProfileStatus extends React.Component {
-  state = {
-    editMode: false,
-    status: this.props.status
-  };
+function ProfileStatus({ status: statusFromProp, updateStatus }) {
+  const [editMode, setEditMode] = useState(false);
+  const [status, setStatus] = useState(statusFromProp);
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.status !== this.props.status) {
-      this.setState({ status: this.props.status });
+  useEffect(() => {
+    setStatus(statusFromProp);
+  }, [statusFromProp]);
+
+  const toggleStateEditMode = () => {
+    if (editMode) {
+      updateStatus(status);
     }
-  }
-
-  toggleStateEditMode = () => {
-    this.setState(state => {
-      if (state.editMode) {
-        this.props.updateStatus(state.status);
-        return { editMode: !state.editMode };
-      } else {
-        return { editMode: !state.editMode };
-      }
-    });
+    setEditMode(!editMode);
   };
 
-  handleChangeValue = e => {
-    this.setState({
-      status: e.target.value
-    });
+  const handleChangeValue = e => {
+    setStatus(e.target.value);
   };
 
-  render() {
-    return (
-      <>
-        {this.state.editMode ? (
-          <div>
-            <input
-              autoFocus
-              onBlur={this.toggleStateEditMode}
-              value={this.state.status}
-              onChange={this.handleChangeValue}
-            />
-          </div>
-        ) : (
-          <div>
-            <span onDoubleClick={this.toggleStateEditMode}>
-              {this.props.status || "no status"}
-            </span>
-          </div>
-        )}
-      </>
-    );
-  }
+  return (
+    <>
+      {editMode ? (
+        <div>
+          <input
+            autoFocus
+            onBlur={toggleStateEditMode}
+            value={status}
+            onChange={handleChangeValue}
+          />
+        </div>
+      ) : (
+        <div>
+          <span onDoubleClick={toggleStateEditMode}>
+            {status || "no status"}
+          </span>
+        </div>
+      )}
+    </>
+  );
 }
 
 export default ProfileStatus;

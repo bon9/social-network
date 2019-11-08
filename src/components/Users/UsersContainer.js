@@ -1,74 +1,61 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import Users from "./Users";
 import Preloader from "./../common/Preloader/Preloader";
-
 import { getUsersThunk, toggleFollowingThunk } from "../../redux/usersReducer";
-import { withAuthRedirect } from "./../../hoc/withAuthRedirect";
-import { compose } from "redux";
+import {
+  getUsers,
+  getPageSize,
+  getTotalUsersCount,
+  getCurrentPage,
+  getIsFetching,
+  getUsersInFollowingChanging
+} from "./../../redux/users-selectors";
 
-class UsersContainer extends React.Component {
-  componentDidMount() {
-    this.props.getUsers(this.props.currentPage, this.props.pageSize);
-  }
+function UsersContainer() {
+  const users = useSelector(state => getUsers(state));
+  const pageSize = useSelector(state => getPageSize(state));
+  const totalUsersCount = useSelector(state => getTotalUsersCount(state));
+  const currentPage = useSelector(state => getCurrentPage(state));
+  const isFetching = useSelector(state => getIsFetching(state));
+  const usersInFollowingChanging = useSelector(state =>
+    getUsersInFollowingChanging(state)
+  );
 
-  onPageChanged = pageNum => {
-    this.props.getUsers(pageNum, this.props.pageSize);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUsersThunk(currentPage, pageSize));
+  }, [currentPage, dispatch, pageSize]);
+
+  const onPageChanged = pageNum => {
+    dispatch(getUsersThunk(pageNum, pageSize));
   };
 
-  onToggleFollowing = (followed, userId) => {
-    this.props.toggleFollowing(followed, userId);
-  };
+  const onToggleFollowing = useCallback(
+    (followed, userId) => dispatch(toggleFollowingThunk(followed, userId)),
+    [dispatch]
+  );
+  console.log("USERS profile");
 
-  render() {
-    const {
-      users,
-      pageSize,
-      currentPage,
-      totalUsersCount,
-      isFetching,
-      usersInFollowingChanging
-    } = this.props;
-
-    return (
-      <>
-        {isFetching ? (
-          <Preloader />
-        ) : (
-          <Users
-            users={users}
-            pageSize={pageSize}
-            currentPage={currentPage}
-            totalUsersCount={totalUsersCount}
-            onPageChanged={this.onPageChanged}
-            usersInFollowingChanging={usersInFollowingChanging}
-            onToggleFollowing={this.onToggleFollowing}
-          />
-        )}
-      </>
-    );
-  }
+  return (
+    <>
+      {isFetching ? (
+        <Preloader />
+      ) : (
+        <Users
+          users={users}
+          pageSize={pageSize}
+          currentPage={currentPage}
+          totalUsersCount={totalUsersCount}
+          onPageChanged={onPageChanged}
+          usersInFollowingChanging={usersInFollowingChanging}
+          onToggleFollowing={onToggleFollowing}
+        />
+      )}
+    </>
+  );
 }
 
-const mapStateToProps = state => {
-  return {
-    users: state.usersPage.users,
-    pageSize: state.usersPage.pageSize,
-    totalUsersCount: state.usersPage.totalUsersCount,
-    currentPage: state.usersPage.currentPage,
-    isFetching: state.usersPage.isFetching,
-    usersInFollowingChanging: state.usersPage.usersInFollowingChanging
-  };
-};
-
-export default compose(
-  connect(
-    mapStateToProps,
-    {
-      getUsers: getUsersThunk,
-      toggleFollowing: toggleFollowingThunk
-    }
-  ),
-  withAuthRedirect
-)(UsersContainer);
+export default UsersContainer;

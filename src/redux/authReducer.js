@@ -42,46 +42,37 @@ export function setLogout() {
 }
 
 export function setErrorSubmit(errorMessages) {
-  console.log("setErrorSubmit");
   return { type: SET_ERROR_SUBMIT, errorMessages };
 }
 
-export const getAuthUserDataThunk = () => {
-  return dispatch => {
-    authAPI.authMe().then(data => {
-      // resultCode 0 - мы залогинены
-      if (data.resultCode === 0) {
-        const { id, email, login } = data.data;
-        dispatch(setAuthUserData(id, email, login, true));
-      }
-    });
-  };
+export const getAuthUserDataThunk = () => dispatch => {
+  return authAPI.authMe().then(data => {
+    // resultCode 0 - мы залогинены
+    if (data.resultCode === 0) {
+      const { id, email, login } = data.data;
+      dispatch(setAuthUserData(id, email, login, true));
+    }
+  });
 };
 
-export const loginThunk = (email, password, rememberMe) => {
-  return dispatch => {
-    authAPI.login(email, password, rememberMe).then(data => {
-      console.log(data);
-
-      // resultCode 0 - мы залогинены
-      if (data.resultCode === 0) {
-        dispatch(getAuthUserDataThunk());
-      } else {
-        dispatch(setErrorSubmit(data.messages[0]));
-      }
-    });
-  };
+export const loginThunk = (email, password, rememberMe) => dispatch => {
+  authAPI.login(email, password, rememberMe).then(data => {
+    // resultCode 0 - мы залогинены
+    if (data.resultCode === 0) {
+      dispatch(getAuthUserDataThunk());
+    } else {
+      dispatch(setErrorSubmit(data.messages[0]));
+    }
+  });
 };
 
-export const logoutThunk = () => {
-  return dispatch => {
-    authAPI.logout().then(data => {
-      // resultCode 0 - мы залогинены
-      if (data.resultCode === 0) {
-        dispatch(setAuthUserData(null, null, null, false));
-      }
-    });
-  };
+export const logoutThunk = () => dispatch => {
+  authAPI.logout().then(data => {
+    // resultCode 0 - мы залогинены
+    if (data.resultCode === 0) {
+      dispatch(setAuthUserData(null, null, null, false));
+    }
+  });
 };
 
 export default authReducer;
