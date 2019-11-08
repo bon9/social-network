@@ -7,8 +7,8 @@ import LoginInput from "./LoginInput";
 import { loginThunk, logoutThunk } from "./../../redux/authReducer";
 import { Redirect } from "react-router-dom";
 
-const Login = ({ loginThunk, isAuth, error }) => {
-  const onSubmit = async values => {
+const Login = ({ loginThunk, isAuth }) => {
+  const onSubmit = values => {
     const { login, password, rememberMe } = values;
     loginThunk(login, password, rememberMe);
   };
@@ -20,12 +20,12 @@ const Login = ({ loginThunk, isAuth, error }) => {
   return (
     <div>
       <h1>Login</h1>
-      <LoginForm onSubmit={onSubmit} error={error} />
+      <LoginForm onSubmit={onSubmit} />
     </div>
   );
 };
-
-const LoginForm = ({ onSubmit, error }) => {
+// PbRw9jAcfS9adsa
+const LoginForm = ({ onSubmit }) => {
   return (
     <Form
       onSubmit={onSubmit}
@@ -59,7 +59,6 @@ const LoginForm = ({ onSubmit, error }) => {
               )}
             </Field>
             <label for="rememberMe">remember me</label>
-            {error && <div>{error}</div>}
 
             <div>
               <button type="submit" disabled={submitting || pristine}>
@@ -79,8 +78,7 @@ const LoginForm = ({ onSubmit, error }) => {
 
 const mstp = state => {
   return {
-    isAuth: state.auth.isAuth,
-    error: state.auth.error
+    isAuth: state.auth.isAuth
   };
 };
 

@@ -8,8 +8,7 @@ const initialState = {
   email: null,
   login: null,
   isAuth: false,
-  isFetching: false,
-  error: ""
+  isFetching: false
 };
 
 const authReducer = (state = initialState, action) => {
@@ -18,12 +17,8 @@ const authReducer = (state = initialState, action) => {
       //action.data объект с userId, email, login
       return {
         ...state,
-        ...action.payload,
-        error: ""
+        ...action.payload
       };
-
-    case SET_ERROR_SUBMIT:
-      return { ...state, error: action.errorMessages };
 
     default:
       return state;
