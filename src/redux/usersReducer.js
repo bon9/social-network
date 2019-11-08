@@ -1,7 +1,6 @@
 import { usersAPI } from "./../api/api";
 
 const TOGGLE_FOLLOW = "users/TOGGLE_FOLLOW";
-// const UN_FOLLOW = "users/UN_FOLLOW";
 const SET_USERS = "users/SET_USERS";
 const SET_CURRENT_PAGE = "users/SET_CURRENT_PAGE";
 const SET_TOTAL_COUNT_PAGE = "users/SET_TOTAL_COUNT_PAGE";
@@ -10,12 +9,11 @@ const TOGGLE_FOLLOWING_PROGRESS = "users/TOGGLE_FOLLOWING_PROGRESS";
 
 const initialState = {
   users: [],
-  pageSize: 5,
+  pageSize: 10,
   totalUsersCount: 0,
   currentPage: 1,
   isFetching: false,
-  usersInFollowingChanging: [],
-  fake: 10
+  usersInFollowingChanging: []
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -56,6 +54,7 @@ const usersReducer = (state = initialState, action) => {
           : // Если запрос уже НЕ в процессе, то удаляем айдишник из массива
             state.usersInFollowingChanging.filter(id => id !== action.userId)
       };
+
     default:
       return state;
   }

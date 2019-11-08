@@ -37,7 +37,6 @@ function UsersContainer() {
     (followed, userId) => dispatch(toggleFollowingThunk(followed, userId)),
     [dispatch]
   );
-  console.log("USERS profile");
 
   return (
     <>
